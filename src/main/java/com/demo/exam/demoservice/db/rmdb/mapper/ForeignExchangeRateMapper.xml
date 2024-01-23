@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.exam.demoservice.db.rmdb.mapper.ForeignExchangeRateMapper">
+    <insert id="batchSaveOrUpdate">
+        INSERT INTO foreign_exchange_rates (id, shown_date, usd_to_ntd)
+        VALUES
+        <foreach item="entity" index="index" collection="entities" open="(" close=")" separator="),(">
+            #{entity.id}, #{entity.shownDate}, #{entity.usdToNtd}
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        shown_date = VALUES(shown_date),
+        usd_to_ntd = VALUES(usd_to_ntd)
+    </insert>
+</mapper>

@@ -1,0 +1,76 @@
+server:
+  port: 8081
+
+spring:
+  profiles:
+    active: ${PROFILE_ACTIVE:local}
+  application:
+    name: @project.name@
+  datasource:
+    url: ${RMDB_URL}
+    username: ${RMDB_USERNAME}
+    password: ${RMDB_PASSWORD}
+    pool-name: standard-syncer-jdbc-pool
+    maximum-pool-size: ${RMDB_MAX_POOL_SIZE}
+    minimum-idle: ${RMDB_MINI_IDLE}
+    idle-timeout: ${RMDB_IDLE_TIMEOUT}
+    connection-timeout: ${RMDB_CONNECTION_TIMEOUT}
+    max-lifetime: ${RMDB_MAX_LIFE_TIME}
+    validation-timeout: ${RMDB_VALIDATION_TIME}
+    time-zone: ${RMDB_TIME_ZONE:+00:00}
+    data-source-properties:
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+      cachePrepStmts: true
+      useServerPrepStmts: true
+      useLocalSessionState: true
+      rewriteBatchedStatements: true
+      cacheResultSetMetadata: true
+      cacheServerConfiguration: true
+      elideSetAutoCommits: true
+      maintainTimeStats: false
+  flyway:
+    enabled: true
+    encoding: UTF-8
+    ignore-missing-migrations: true
+    baseline-on-migrate: true
+  messages:
+    basename: messages.messages
+    encoding: UTF-8
+
+mybatis-plus:
+  type-aliases-package: com.demo.exam.demoservice.db.rmdb.entity
+  mapper-locations: classpath:com/demo/exam/demoservice/db/rmdb/mapper/*Mapper.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    local-cache-scope: statement
+
+ribbon:
+  eureka:
+    enabled: false
+  eager-load:
+    enabled: true
+    clients: dc-provider
+  ReadTimeout: 120000
+  ConnectTimeout: 120000
+  MaxAutoRetriesNextServer: 0
+  MaxAutoRetries: 0
+  NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RoundRobinRule
+  NFLoadBalancerPingClassName: com.netflix.loadbalancer.PingUrl
+
+feign:
+  okhttp:
+    enabled: true
+  httpclient:
+    enabled: false
+  client:
+    config:
+      default:
+        connectTimeout: 120000
+        readTimeout: 120000
+        loggerLevel: basic
+
+#logging:
+#  level:
+#    com.demo.exam.demoservice.db.rmdb.mapper: DEBUG
