@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 @RestController
 @RequiredArgsConstructor
-public class foreignExchangeRateController {
+public class ForeignExchangeRateController {
     private final ForeignExchangeRateBusiness foreignExchangeRateBusiness;
 
     @PostMapping("/api/v1/feignExchangeRates")
@@ -27,8 +27,14 @@ public class foreignExchangeRateController {
             return new ResponseVo(ResponseCode.INPUT_DURATION_INVALID);
         }
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
-        LocalDate startDate = LocalDate.parse(bo.getStartDate(), dtf);
-        LocalDate endDate = LocalDate.parse(bo.getEndDate(), dtf);
+        LocalDate startDate;
+        LocalDate endDate;
+        try{
+            startDate = LocalDate.parse(bo.getStartDate(), dtf);
+            endDate = LocalDate.parse(bo.getEndDate(), dtf);
+        } catch (Exception e) {
+            return new ResponseVo(ResponseCode.INPUT_DURATION_INVALID);
+        }
         ZonedDateTime startTime = startDate.atStartOfDay(ZoneId.systemDefault()).minusSeconds(1);
         ZonedDateTime endTime = endDate.atStartOfDay(ZoneId.systemDefault());
         ZonedDateTime endTimeLimit = ZonedDateTime.now().minusDays(1).minusSeconds(1);

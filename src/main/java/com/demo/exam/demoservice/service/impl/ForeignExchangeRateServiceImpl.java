@@ -19,7 +19,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ForeignExchangeRateServiceImpl extends ServiceImpl<ForeignExchangeRateMapper, ForeignExchangeRate> implements ForeignExchangeRateService {
     private final ForeignExchangeRateMapper foreignExchangeRateMapper;
-    final int BATCH_SIZE = 10;
+    final int BATCH_SIZE = 30;
 
     @Transactional
     @Override

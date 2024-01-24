@@ -19,7 +19,7 @@ public class ResponseVo {
     @Data
     @NoArgsConstructor
     @AllArgsConstructor
-    private static class ResponseStatusVo {
+    public static class ResponseStatusVo {
         private String code;
         private String message;
 
